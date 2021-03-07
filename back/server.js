@@ -1,23 +1,10 @@
-// IMPORT MODULES
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config()
 
-const app = express();
-const port = process.env.PORT || 5000;
+const http = require('http');
+const app = require('./app');
 
-app.use(cors());
-app.use(express.json());
-
-const uri = process.env.DATACONF;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
-
-const connection = mongoose.connection; 
-mongoose.connection.once('open', () => {
-    console.log("success, data available")
-})
-
-app.listen(port, () => {
-    console.log('server connected')
+const server = http.createServer((req, res) => {
+    res.end('Server Ok');
 });
+
+server.listen(process.env.PORT || 3001);

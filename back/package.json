@@ -4,15 +4,21 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest "
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Naddiya/argonautes.git"
   },
   "author": "Naddiya",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Naddiya/argonautes/issues"
+  },
+  "homepage": "https://github.com/Naddiya/argonautes#readme",
   "dependencies": {
-    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.19",
     "nodemon": "^2.0.7"
   }
 }
