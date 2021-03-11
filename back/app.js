@@ -1,7 +1,7 @@
 // IMPORT ENV
 require('dotenv').config();
 const dataConf = process.env.DATACONF;
-const Member = require('./models/member');
+const Member = require('./models/Member');
 
 // IMPORT MODULES npm
 const express = require('express');
@@ -25,8 +25,8 @@ app.use(express.json());
 
 
 // // MIDDLEWARE TO POST NEW STUFF TO DATABASE
- app.post('/argos',(req, res, next) => {
-     //console.log(req.body)
+ app.post('/argos/post',(req, res, next) => {
+     console.log(req.body)
     const member = new Member({
         ...req.body
     });
@@ -36,7 +36,7 @@ app.use(express.json());
  });
 
 app.use('/argos', (req, res, next) => {
-    const argos = [
+    const member = [
         {
             _id: "jklqsdjfkm",
             name: "Eleftheria"
@@ -50,7 +50,7 @@ app.use('/argos', (req, res, next) => {
             name: "Lysimachos"
         }
     ];
-    res.status(200).json(argos)
+    res.status(200).json(member)
 });
 
   // MIDDLEWARE TO GET A SINGLE STUFF
