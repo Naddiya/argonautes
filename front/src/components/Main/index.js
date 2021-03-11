@@ -1,34 +1,45 @@
 import React from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 
 
 
 export default class Main extends React.Component {
-  state = {
-    members: []
-  }
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    axios.get(`http://localhost:3001/argos`)
-      .then(res => {
-        const members = res.data;
-        console.log(members)
-        this.setState({
-          members
-        });
-      })
+    this.state = {
+        members: [],
+        inputValue: ""
+    };
 
-  }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  
+}
+
+  handleChange(event) {
+    this.setState(
+      { inputValue: event.target.value }
+      );
+
+  };
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const newMember = this.state.inputValue;
+    console.log('this member was added to database : ' + newMember);
+    }
+
   render() {
     return (
 
       <main>
       <h2> Ajouter un(e) Argonaute </h2> 
-        <form className = "new-member-form">
+        <form className = "new-member-form" onSubmit={this.handleSubmit}>
           <label className = "name" > Nom de l' Argonaute </label> 
-          <input id = "name" name = "name" type = "text" placeholder = "Charalampos"/>
-          <button onClick > Envoyer </button> 
+          <input type="text" onChange={this.handleChange} placeholder = "Charalampos" id = "name" name = "name"/>
+          <button type="submit"> Envoyer </button>
         </form>
       <h2> Membres de l 'équipage </h2> 
         <section className = "member-list">
