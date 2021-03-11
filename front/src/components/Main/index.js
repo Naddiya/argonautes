@@ -1,35 +1,46 @@
 import React from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 
 
 
 
 export default class Main extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
+  // INITIAL STATE  
+  state = {
         members: [],
         inputValue: ""
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  
-}
-
-  handleChange(event) {
-    this.setState(
-      { inputValue: event.target.value }
-      );
-
+  // GET CREW MEMBERS  
+  componentDidMount() {
+     axios.get(`http://localhost:3001/argos`)
+       .then(response => {
+         const members = response.data;
+         this.setState({ members });
+       })
+    }
+  // HANDLE CHANGE ON INPUT
+  handleChange = event => {
+    this.setState({ inputValue: event.target.value });
   };
 
-  handleSubmit(event) {
+  // SUBMIT NEW MEMBER VIA AXIOS
+  handleSubmit = event => {
     event.preventDefault();
-    const newMember = this.state.inputValue;
-    console.log('this member was added to database : ' + newMember);
-    }
+
+    const newMember = {
+      members: this.state.inputValue
+    };
+
+    let headers = {
+               'Acces-Control-Allow-Origin': "*",
+               'Content-Type':'application/JSON',};
+
+    axios.post(`https://localhost:3001/argos`, { newMember }, headers)
+      .then(response => {
+        console.log(response);
+        console.log(response.data);
+      })
+  }
 
   render() {
     return (
@@ -39,7 +50,7 @@ export default class Main extends React.Component {
         <form className = "new-member-form" onSubmit={this.handleSubmit}>
           <label className = "name" > Nom de l' Argonaute </label> 
           <input type="text" onChange={this.handleChange} placeholder = "Charalampos" id = "name" name = "name"/>
-          <button type="submit"> Envoyer </button>
+          <button type="submit" onSubmit={this.handleChange}> Envoyer </button>
         </form>
       <h2> Membres de l 'équipage </h2> 
         <section className = "member-list">
