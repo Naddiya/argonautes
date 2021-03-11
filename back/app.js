@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 
 // CONNECT TO DATABASE
-mongoose.connect(dataConf,{useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dataConf,{ useNewUrlParser: true, useUnifiedTopology: true })
     .then(()=>console.log('Success MongoDb connected'))
     .catch(() => console.log('Failed MongoDb not connected'));
 
@@ -24,16 +24,16 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 
-// MIDDLEWARE TO POST NEW STUFF TO DATABASE
-app.post('/api/member',(req, res, next) => {
-    delete req.body._id;
-    const thing = new Thing({
+// // MIDDLEWARE TO POST NEW STUFF TO DATABASE
+ app.post('/argos',(req, res, next) => {
+     //console.log(req.body)
+    const member = new Member({
         ...req.body
     });
-    thing.save()
-        .then(()=> res.status(201).json({ message: 'object recorded in database'}))
-        .catch(()=> res.status(400).json({ error: 'cant record object'}));
-  });
+     member.save()
+         .then(()=> res.status(201).json({ message: 'object recorded in database'}))
+         .catch(()=> res.status(400).json({ error: 'cant record object'}));
+ });
 
 app.use('/argos', (req, res, next) => {
     const argos = [
@@ -61,11 +61,11 @@ app.use('/argos', (req, res, next) => {
 //   });
 
 // MIDDLEWARE TO GET STUFF COLLECTION
-app.use('/api/stuff', (req, res, next) => {
-    Member.find()
-    .then(things => res.status(200).json(things))
-    .catch(error => res.status(400).json({ error }))
-  });
+// app.use('/api/member', (req, res, next) => {
+//     Member.find()
+//     .then(things => res.status(200).json(things))
+//     .catch(error => res.status(400).json({ error }))
+//   });
 
 
   
