@@ -54,7 +54,7 @@ export default class Main extends React.Component {
         </form>
       <h2> Membres de l 'équipage </h2> 
         <section className = "member-list">
-          <div className = "member-item">{ this.state.members.map(member => <li key={member._id}>{member.name}</li>) } </div> 
+          <div className = "member-item">{ this.state.members.map(member => <li key={member._id}>{member.membername}</li>) } </div> 
         </section>       
       </main>
 
