@@ -12,7 +12,7 @@ export default class Main extends React.Component {
     };
   // GET CREW MEMBERS  
   componentDidMount() {
-     axios.get(`http://localhost:3001/argos`)
+     axios.get(`http://localhost:4001/members`)
        .then(response => {
          const members = response.data;
          this.setState({ members });
