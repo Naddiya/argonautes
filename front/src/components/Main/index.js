@@ -8,7 +8,7 @@ export default class Main extends React.Component {
   // INITIAL STATE  
   state = {
         members: [],
-        inputValue: ""
+        newMember: "",
     };
   // GET CREW MEMBERS  
   componentDidMount() {
@@ -20,27 +20,25 @@ export default class Main extends React.Component {
     }
   // HANDLE CHANGE ON INPUT
   handleChange = event => {
-    this.setState({ inputValue: event.target.value });
+    this.setState({ newMember: event.target.value });
+    console.log(this.state.newMember)
   };
-
-  // SUBMIT NEW MEMBER VIA AXIOS
+//  SUBMIT NEW MEMBER VIA AXIOS
   handleSubmit = event => {
     event.preventDefault();
 
-    const newMember = {
-      members: this.state.inputValue
+    const member = {
+      membername: this.state.newMember
     };
+    console.log(member);
 
-    let headers = {
-               'Acces-Control-Allow-Origin': "*",
-               'Content-Type':'application/JSON',};
+    axios.post('http://localhost:4001/members/add', member)
+    .then(res => console.log(res.data));
 
-    axios.post(`https://localhost:3001/argos`, { newMember }, headers)
-      .then(response => {
-        console.log(response);
-        console.log(response.data);
-      })
-  }
+    this.setState({
+      membername:""
+    })
+   }
 
   render() {
     return (
@@ -50,7 +48,7 @@ export default class Main extends React.Component {
         <form className = "new-member-form" onSubmit={this.handleSubmit}>
           <label className = "name" > Nom de l' Argonaute </label> 
           <input type="text" onChange={this.handleChange} placeholder = "Charalampos" id = "name" name = "name"/>
-          <button type="submit" onSubmit={this.handleChange}> Envoyer </button>
+          <button type="submit" onSubmit={this.handleSubmit}> Envoyer </button>
         </form>
       <h2> Membres de l 'équipage </h2> 
         <section className = "member-list">
